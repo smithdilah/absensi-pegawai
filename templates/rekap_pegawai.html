@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Rekap Absensi Saya</h2>
+
+<table>
+    <tr>
+        <th>Tanggal</th>
+        <th>Status</th>
+        <th>Danton</th>
+    </tr>
+    {% for r in data %}
+    <tr>
+        <td>{{ r.tanggal }}</td>
+        <td>{{ r.status }}</td>
+        <td>{{ r.nama_danton }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

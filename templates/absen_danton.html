@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 style="text-align:center; color:#0A4DBF; margin-bottom:20px;">Absensi Pegawai Divisi Anda</h2>
+
+<form method="POST" style="max-width:1200px; margin:auto;">
+
+    <label style="font-weight:bold; font-size:18px;">Tanggal:</label>
+    <input type="date" name="tanggal" value="{{ tanggal }}" required style="width:100%; padding:10px;">
+
+    <br><br>
+
+    <table border="1" style="width:100%; border-collapse:collapse;">
+        <tr style="background:#f0f4ff; font-weight:bold;">
+            <th style="padding:12px;">Nama Pegawai</th>
+            <th style="padding:12px;">Status</th>
+            <th style="padding:12px;">Keterangan</th>
+        </tr>
+
+        {% for p in pegawai %}
+        <tr>
+            <td style="padding:12px;">
+                {{ p.get('nama') or p.get('nama_lengkap') or p.get('full_name') or p.get('username') }}
+            </td>
+
+            <td style="padding:12px;">
+                <select name="status_{{ p.id }}" required style="width:100%; padding:8px;">
+                    <option value="H">Hadir</option>
+                    <option value="DD">Dinas Dalam</option>
+                    <option value="DL">Dinas Luar</option>
+                    <option value="C">Cuti</option>
+                    <option value="S">Sakit</option>
+                    <option value="I">Izin</option>
+                    <option value="TK">Tanpa Keterangan</option>
+                </select>
+            </td>
+
+            <td style="padding:12px;">
+                <input type="text" name="keterangan_{{ p.id }}" placeholder="(Opsional)" style="width:100%; padding:8px;">
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <br>
+    <button type="submit" style="width:100%; padding:15px; font-size:20px; background:#0056D2; color:white; border:none; border-radius:5px; cursor:pointer;">
+        Simpan Absensi
+    </button>
+</form>
+
+{% endblock %}

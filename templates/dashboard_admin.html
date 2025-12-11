@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Dashboard Admin</h2>
+
+<div class="buttons">
+    <a class="btn" href="{{ url_for('kelola_jadwal') }}">Kelola Jadwal Danton</a>
+    <a class="btn" href="{{ url_for('rekap_absensi_all') }}">Lihat Rekap Absensi</a>
+    <a class="btn" href="{{ url_for('export_excel') }}">Download Excel Absensi</a>
+</div>
+
+<br>
+<p>Selamat datang Administrator! Kelola jadwal dan data absensi melalui menu di atas.</p>
+{% endblock %}

@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block content %}
+<h2>Rekap Absensi Semua Pegawai</h2>
+
+<table>
+    <tr>
+        <th>Nama Pegawai</th>
+        <th>Nama Danton</th>
+        <th>Tanggal</th>
+        <th>Status</th>
+    </tr>
+    {% for r in absensi %}
+    <tr>
+        <td>{{ r.nama_pegawai }}</td>
+        <td>{{ r.nama_danton }}</td>
+        <td>{{ r.tanggal }}</td>
+        <td>{{ r.status }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+<a class="btn" href="/export-excel">Download Excel</a>
+{% endblock %}

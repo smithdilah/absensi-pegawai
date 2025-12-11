@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <h2>Kelola Jadwal Danton</h2>
+
+    <form method="POST">
+
+        <!-- PILIH UNIT -->
+        <label>Unit</label>
+        <select id="unit_select" name="unit_id" required class="form-control">
+            <option value="">-- Pilih Unit --</option>
+            {% for u in unit %}
+            <option value="{{ u.id }}">{{ u.nama }}</option>
+            {% endfor %}
+        </select>
+
+        <!-- PILIH DANTON -->
+        <label>Danton (Pegawai)</label>
+        <select id="danton_select" name="danton_id" required class="form-control">
+            <option value="">-- Pilih Unit Terlebih Dahulu --</option>
+        </select>
+
+        <label>Tanggal</label>
+        <input type="date" name="tanggal" required class="form-control">
+
+        <label>Keterangan</label>
+        <input type="text" name="keterangan" class="form-control" placeholder="Opsional">
+
+        <button type="submit" class="btn btn-primary mt-3">Simpan</button>
+    </form>
+
+    <hr>
+
+    <h3>Daftar Jadwal</h3>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Danton</th>
+                <th>Unit</th>
+                <th>Tanggal</th>
+                <th>Keterangan</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% if jadwal %}
+                {% for j in jadwal %}
+                <tr>
+                    <td>{{ j.nama_danton }}</td>
+                    <td>{{ j.unit }}</td>
+                    <td>{{ j.tanggal }}</td>
+                    <td>{{ j.keterangan }}</td>
+                </tr>
+                {% endfor %}
+            {% else %}
+            <tr>
+                <td colspan="4" class="text-center">Belum ada data.</td>
+            </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    const pegawai = {{ pegawai_json | tojson | safe }};
+
+    document.getElementById("unit_select").addEventListener("change", function () {
+
+        const unitId = this.value;
+        const unitNama = this.options[this.selectedIndex].text;  
+        const dantonDropdown = document.getElementById("danton_select");
+
+        dantonDropdown.innerHTML = '<option value="">-- Pilih Danton --</option>';
+
+        if (!unitId) return;
+
+        // FILTER PEGawai berdasar NAMA UNIT, bukan ID
+        const filtered = pegawai.filter(p => p.unit_nama === unitNama);
+
+        filtered.forEach(p => {
+            dantonDropdown.innerHTML += `
+                <option value="${p.id}">${p.nama}</option>
+            `;
+        });
+
+    });
+</script>
+
+
+{% endblock %}
